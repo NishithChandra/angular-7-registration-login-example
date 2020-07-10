@@ -16,6 +16,11 @@ module.exports = {
                 test: /\.(html|css)$/,
                 loader: 'raw-loader'
             },
+            {
+                test: /\.scss$/,
+                exclude: [/node_modules/, /\.global\.scss$/],
+                use: ["to-string-loader", "css-loader", "sass-loader"]
+            }
         ]
     },
     resolve: {
@@ -33,7 +38,7 @@ module.exports = {
         new webpack.DefinePlugin({
             // global app config object
             config: JSON.stringify({
-                apiUrl: 'http://localhost:4000'
+                apiUrl: 'http://localhost:8080'
             })
         })
     ],

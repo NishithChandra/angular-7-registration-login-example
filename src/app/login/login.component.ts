@@ -5,7 +5,11 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, AuthenticationService } from '@/_services';
 
-@Component({templateUrl: 'login.component.html'})
+@Component({
+    selector: 'member-login',
+    templateUrl: 'login.component.html',
+    styleUrls: ['./login.component.scss']
+})
 export class LoginComponent implements OnInit {
     loginForm: FormGroup;
     loading = false;
@@ -17,11 +21,11 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService
+        private alertService: AlertService,
     ) {
         // redirect to home if already logged in
-        if (this.authenticationService.currentUserValue) { 
-            this.router.navigate(['/']);
+        if (this.authenticationService.currentUserValue) {
+            this.router.navigate(['/home']);
         }
     }
 
@@ -36,7 +40,9 @@ export class LoginComponent implements OnInit {
     }
 
     // convenience getter for easy access to form fields
-    get f() { return this.loginForm.controls; }
+    get f() {
+        return this.loginForm.controls
+    }
 
     onSubmit() {
         this.submitted = true;
@@ -51,7 +57,12 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    if(this.returnUrl) {
+                        this.router.navigate(['home'])
+                    }
+                    else {
+                        this.router.navigate([this.returnUrl]);
+                    }
                 },
                 error => {
                     this.alertService.error(error);

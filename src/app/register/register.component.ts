@@ -26,10 +26,12 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
+            firstName:['', Validators.required],
             lastName: ['', Validators.required],
             username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            phone : ['', [Validators.required, Validators.pattern("^((\\+91-?)|0)?[0-9]{10}$")]],
+            email: ['', Validators.required]
         });
     }
 
@@ -56,5 +58,7 @@ export class RegisterComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+
     }
+
 }
